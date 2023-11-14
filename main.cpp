@@ -1,4 +1,6 @@
-#include<iostream>
+#include <iostream>
+#include <chrono>
+#include <unistd.h>
 using namespace std;
 
 
@@ -118,5 +120,69 @@ void quickSort(int* arr, int start, int end)
 
 int main() {
     setlocale(LC_ALL, "Russian");
+
+    const int N = 100;
+    int arr[N] = {};
+
+    cout << "Navigation:" << "\n"
+    << "1) Create an integer array of size N = 100. The elements of the array must take a random value in the range from -99 to 99" << "\n"
+    << "2) Sort the array (from smallest to largest)" << "\n"
+    << "3) Find the max and min element of the array. Calculate the search time for these elements in sorted array and unsorted" << "\n"
+    << "4) Prints the average of max and min values in sorted and unsorted arrays. Prints the indexes of all elements that are equal to this value and their number" << "\n"
+    << "5) Prints the number of elements in sorted array that are less then number <a>" << "\n"
+    << "6) Prints the number of elements in sorted array that are greater than the number <b>" << "\n"
+    << "7) Displays information about whether the <number> in sorted array. And compare binary search with regular search alorithm (*)" << "\n"
+    << "8) Swaps array elements on <indexes>" << "\n";
+
+    while(true) {
+        short int workPoint;
+        
+        cout << "Select point of work (number 1 to 8): ";
+        cin >> workPoint;
+
+        switch (workPoint)
+        {
+            case 1: {
+                break;
+            }
+            case 2: {
+                break;
+            }
+            case 3: {
+                break; 
+            } 
+            case 4: {
+                break;   
+            } 
+            case 5: {
+                break;   
+            }       
+            case 6: {
+                break;   
+            }       
+            case 7: {
+                break;   
+            }       
+            case 8: {
+                break;   
+            }             
+            default: {
+                cout << "\n" << "You did not enter a number in the range from 1 to 8";
+                break;
+            }
+        }
+        
+        cin.clear(); // Clearing the input stream from possible errors
+        cin.sync();
+
+        char stopFlag;
+        cout << "\n" << "Continue the program? (Y/N) ";
+        cin >> stopFlag;
+        
+        if (stopFlag != 'Y' && stopFlag != 'y') {
+            break;
+        }
+    }
+
     return 0;
 }
