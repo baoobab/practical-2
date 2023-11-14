@@ -1,4 +1,4 @@
-#include <iostream>
+#include<iostream>
 #include <chrono>
 #include <unistd.h>
 using namespace std;
@@ -143,9 +143,15 @@ int main() {
         switch (workPoint)
         {
             case 1: {
+                fillArray(arr, N, 100);
                 break;
             }
             case 2: {
+                auto start = chrono::steady_clock::now();
+                bubbleSort(arr, N);
+                auto end = chrono::steady_clock::now();
+                cout << "Elapsed time in microseconds: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " microsec" << "\n";
+                cout << "Elapsed time in milliseconds: " << chrono::duration_cast<chrono::milliseconds>(end - start).count() << " millisec" << "\n";
                 break;
             }
             case 3: {
@@ -153,19 +159,19 @@ int main() {
             } 
             case 4: {
                 break;   
-            } 
+            }     
             case 5: {
-                break;   
-            }       
+                break;
+            }  
             case 6: {
-                break;   
-            }       
+                break;
+            } 
             case 7: {
-                break;   
-            }       
+                break;
+            } 
             case 8: {
-                break;   
-            }             
+                break;
+            } 
             default: {
                 cout << "\n" << "You did not enter a number in the range from 1 to 8";
                 break;
