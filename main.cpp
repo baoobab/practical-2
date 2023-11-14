@@ -121,8 +121,8 @@ void quickSort(int* arr, int start, int end)
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    const int N = 100;
-    int arr[N] = {};
+    const int N = 10;
+    int arr[N] = {1, 2, 3, 4, 6, 7, 8, 10, 11, 12};
 
     cout << "Navigation:" << "\n"
     << "1) Create an integer array of size N = 100. The elements of the array must take a random value in the range from -99 to 99" << "\n"
@@ -161,9 +161,59 @@ int main() {
                 break;   
             }     
             case 5: {
+                int a;
+                cout << "\n" << "Enter an integer: ";
+                cin >> a;
+                if (!cin.good()) {
+                    cout << "\n" << "You entered an incorrect value";
+                    break;
+                }
+
+                quickSort(arr, 0, N - 1);
+
+                if (a > arr[(N - 1) / 2]) {
+                    for (int i = N - 1; i >= 0; i--) {
+                        if (arr[i] < a) {
+                            cout << i + 1;
+                            break;
+                        }
+                    }
+                } else if (a < arr[(N - 1) / 2]) {
+                    for (int i = 0; i < N; i++) {
+                        if (arr[i] >= a) {
+                            cout << i;
+                            break;
+                        }
+                    }
+                } else cout << arr[(N - 1) / 2];
                 break;
             }  
             case 6: {
+                int b;
+                cout << "\n" << "Enter an integer: ";
+                cin >> b;
+                if (!cin.good()) {
+                    cout << "\n" << "You entered an incorrect value";
+                    break;
+                }
+
+                quickSort(arr, 0, N - 1);
+
+                if (b > arr[(N - 1) / 2]) {
+                    for (int i = N - 1; i >= 0; i--) {
+                        if (arr[i] <= b) {
+                            cout << N - i - 1;
+                            break;
+                        }
+                    }
+                } else if (b < arr[(N - 1) / 2]) {
+                    for (int i = 0; i < N; i++) {
+                        if (arr[i] > b) {
+                            cout << N - i;
+                            break;
+                        }
+                    }
+                } else cout << arr[(N - 1) / 2];
                 break;
             } 
             case 7: {
