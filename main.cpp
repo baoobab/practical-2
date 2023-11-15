@@ -11,7 +11,7 @@ void fillArray(int *arr, const int N, int absRange) {
     }
 }
 
-int binarySearch(int arr[], int value, int start, int end) {
+int binarySearch(int *arr, int value, int start, int end) {
     if (end >= start) {
         int mid = start + (end - start) / 2;
         
@@ -26,6 +26,13 @@ int binarySearch(int arr[], int value, int start, int end) {
         return binarySearch(arr, value, mid + 1, end);
     }
     
+    return -1;
+}
+
+int defaultSearch(int *arr, int value, const int N) {
+    for (int i = 0; i < N; i++) {
+        if (arr[i] == value) return i;
+    }
     return -1;
 }
 
@@ -121,9 +128,9 @@ void quickSort(int* arr, int start, int end)
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    const int N = 10;
-    int arr[N] = {1, 2, 3, 4, 6, 7, 8, 10, 11, 12};
-
+    const int N = 100;
+    int arr[N] = {};
+    
     cout << "Navigation:" << "\n"
     << "1) Create an integer array of size N = 100. The elements of the array must take a random value in the range from -99 to 99" << "\n"
     << "2) Sort the array (from smallest to largest)" << "\n"
@@ -150,7 +157,6 @@ int main() {
                 auto start = chrono::steady_clock::now();
                 bubbleSort(arr, N);
                 auto end = chrono::steady_clock::now();
-                cout << "Elapsed time in microseconds: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " microsec" << "\n";
                 cout << "Elapsed time in milliseconds: " << chrono::duration_cast<chrono::milliseconds>(end - start).count() << " millisec" << "\n";
                 break;
             }
@@ -217,6 +223,29 @@ int main() {
                 break;
             } 
             case 7: {
+                int number;
+                cout << "\n" << "Enter an integer: ";
+                cin >> number;
+                if (!cin.good()) {
+                    cout << "\n" << "You entered an incorrect value";
+                    break;
+                }
+                quickSort(arr, 0, N - 1);
+
+                auto start = chrono::steady_clock::now();
+                cout << "Binary: ";
+                if (binarySearch(arr, number, 0, N - 1) != -1) cout << "true";
+                else cout << "false";
+                auto end = chrono::steady_clock::now();
+                cout << ", search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " ms" << "\n";
+                
+                auto startDefault = chrono::steady_clock::now();
+                cout << "Default: ";
+                if (defaultSearch(arr, number, N) != -1) cout << "true";
+                else cout << "false";
+                auto endDefault = chrono::steady_clock::now();
+                cout << ", search time: " << chrono::duration_cast<chrono::microseconds>(endDefault - startDefault).count() << " ms" << "\n";
+
                 break;
             } 
             case 8: {
