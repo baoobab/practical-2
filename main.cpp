@@ -185,6 +185,23 @@ int main() {
                 break; 
             } 
             case 4: {
+                quickSort(arr, 0, N - 1);
+                int mn = arr[0];
+                int mx = arr[N - 1];
+                int average = (mn + mx) / 2;
+                cout << "Average: " << average << "\n";
+
+                int count = 0;
+                int index = binarySearch(arr, average, 0, N - 1);
+                for (int i = index - 1; i > -1; i--) {
+                    if (arr[i] == average) cout << i << " ";
+                    else break;
+                }
+                for (int i = index; i < N; i++) {
+                    if (arr[i] == average) cout << i << " ";
+                    else break;
+                }
+                cout << "\n" << "Count of elements: "<< count;
                 break;   
             }     
             case 5: {
