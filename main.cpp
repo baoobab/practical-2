@@ -128,7 +128,7 @@ void quickSort(int* arr, int start, int end)
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    const int N = 10000;
+    const int N = 100;
     int arr[N] = {};
     
     cout << "Navigation:" << "\n"
@@ -142,6 +142,8 @@ int main() {
     << "8) Swaps array elements on <indexes>" << "\n";
 
     while(true) {
+        cin.clear(); // Clearing the input stream from possible errors
+        cin.sync();
         short int workPoint;
         
         cout << "Select point of work (number 1 to 8): ";
@@ -150,10 +152,10 @@ int main() {
         switch (workPoint)
         {
             case 1: {
-                fillArray(arr, N, 1000);
-                // for (int i = 0; i < N; i++) {
-                //     cout << arr[i] << " ";
-                // }
+                fillArray(arr, N, 100);
+                for (int i = 0; i < N; i++) {
+                    cout << arr[i] << " ";
+                }
                 break;
             }
             case 2: {
@@ -293,10 +295,16 @@ int main() {
         
         cin.clear(); // Clearing the input stream from possible errors
         cin.sync();
-
-        // for (int i = 0; i < N; i++) {
-        //     cout << arr[i] << " ";
-        // }
+        
+        char printArray;
+        cout << "\n" << "Print the result array? (Y/N) ";
+        cin >> printArray;
+        
+        if (printArray == 'Y' || printArray == 'y') {
+            for (int i = 0; i < N; i++) cout << arr[i] << " ";
+        }
+        cin.clear();
+        cin.sync();
 
         char stopFlag;
         cout << "\n" << "Continue the program? (Y/N) ";
