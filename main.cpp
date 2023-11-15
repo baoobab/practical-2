@@ -128,7 +128,7 @@ void quickSort(int* arr, int start, int end)
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    const int N = 100;
+    const int N = 10000;
     int arr[N] = {};
     
     cout << "Navigation:" << "\n"
@@ -150,17 +150,36 @@ int main() {
         switch (workPoint)
         {
             case 1: {
-                fillArray(arr, N, 100);
+                fillArray(arr, N, 1000);
+                // for (int i = 0; i < N; i++) {
+                //     cout << arr[i] << " ";
+                // }
                 break;
             }
             case 2: {
                 auto start = chrono::steady_clock::now();
-                bubbleSort(arr, N);
+                quickSort(arr, 0, N - 1);
                 auto end = chrono::steady_clock::now();
-                cout << "Elapsed time in milliseconds: " << chrono::duration_cast<chrono::milliseconds>(end - start).count() << " millisec" << "\n";
+                cout << "Quick sort time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " mcs" << "\n";
                 break;
             }
             case 3: {
+                auto start = chrono::steady_clock::now();
+                int mn = arr[0];
+                int mx = arr[0];
+                for (int i = 0; i < N; i++) {
+                    mn = min(mn, arr[i]);
+                    mx = max(mx, arr[i]);
+                }
+                auto end = chrono::steady_clock::now();
+                cout << "Unsorted: Min " << mn << ", Max " << mx << "\n" 
+                << "Search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " mcs" << "\n";
+                
+                quickSort(arr, 0, N - 1);
+                auto startSorted = chrono::steady_clock::now();
+                cout << "Sorted: Min " << arr[0] << ", Max " << arr[N - 1] << "\n";
+                auto endSorted = chrono::steady_clock::now();
+                cout << "Search time: " << chrono::duration_cast<chrono::microseconds>(endSorted - startSorted).count() << " mcs" << "\n"; 
                 break; 
             } 
             case 4: {
@@ -237,18 +256,33 @@ int main() {
                 if (binarySearch(arr, number, 0, N - 1) != -1) cout << "true";
                 else cout << "false";
                 auto end = chrono::steady_clock::now();
-                cout << ", search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " ms" << "\n";
+                cout << ", search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " mcs" << "\n";
                 
                 auto startDefault = chrono::steady_clock::now();
                 cout << "Default: ";
                 if (defaultSearch(arr, number, N) != -1) cout << "true";
                 else cout << "false";
                 auto endDefault = chrono::steady_clock::now();
-                cout << ", search time: " << chrono::duration_cast<chrono::microseconds>(endDefault - startDefault).count() << " ms" << "\n";
+                cout << ", search time: " << chrono::duration_cast<chrono::microseconds>(endDefault - startDefault).count() << " mcs" << "\n";
 
                 break;
             } 
             case 8: {
+                int firstIndex, secondIndex;
+                cout << "\n" << "Enter an 2 integers: ";
+                cin >> firstIndex;
+                cin >> secondIndex;
+                if (!cin.good()) {
+                    cout << "\n" << "You entered an incorrect value";
+                    break;
+                }
+                if (firstIndex < 0 || secondIndex >= N) {
+                    cout << "\n" << "You entered incorrect indexes";
+                    break;
+                }
+
+                swap(arr[firstIndex], arr[secondIndex]);
+
                 break;
             } 
             default: {
@@ -259,6 +293,10 @@ int main() {
         
         cin.clear(); // Clearing the input stream from possible errors
         cin.sync();
+
+        // for (int i = 0; i < N; i++) {
+        //     cout << arr[i] << " ";
+        // }
 
         char stopFlag;
         cout << "\n" << "Continue the program? (Y/N) ";
