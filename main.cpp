@@ -147,8 +147,8 @@ void quickSort(int arr[], int start, int end)
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    const int N = 10;
-    int arr[N] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    const int N = 100;
+    int arr[N] = {};
     
     cout << "Navigation:" << "\n"
     << "1) Create an integer array of size N = 100. The elements of the array must take a random value in the range from -99 to 99" << "\n"
