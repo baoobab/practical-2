@@ -330,7 +330,7 @@ int main() {
             } 
             case 8: {
                 int firstIndex, secondIndex;
-                cout << "\n" << "Enter an 2 integers: ";
+                cout << "\n" << "Enter an 2 integers (array indexes): ";
                 cin >> firstIndex;
                 cin >> secondIndex;
                 if (!cin.good()) {
