@@ -4,14 +4,29 @@
 using namespace std;
 
 
-void fillArray(int *arr, const int N, int absRange) {
+void fillArray(int arr[], const int N, int absRange) {
     srand(time(0));
     for (int i = 0; i < N; i++) {
         arr[i] = rand() % (absRange * 2) - absRange;
     }
 }
 
-int binarySearch(int *arr, int value, int start, int end) {
+void findArrayMinMax(int arr[], const int N, int &mn, int &mx) {
+    mn = arr[0];
+    mx = arr[0];
+    for (int i = 0; i < N; i++) {
+        mn = min(mn, arr[i]);
+        mx = max(mx, arr[i]);
+    }   
+}
+
+int findArrayAverage(int arr[], const int N) {
+    int mn, mx;
+    findArrayMinMax(arr, N, mn, mx); 
+    return (mx + mn) / 2;
+}
+
+int binarySearch(int arr[], int value, int start, int end) {
     if (end >= start) {
         int mid = start + (end - start) / 2;
         
@@ -29,14 +44,14 @@ int binarySearch(int *arr, int value, int start, int end) {
     return -1;
 }
 
-int defaultSearch(int *arr, int value, const int N) {
+int defaultSearch(int arr[], int value, const int N) {
     for (int i = 0; i < N; i++) {
         if (arr[i] == value) return i;
     }
     return -1;
 }
 
-void bubbleSort(int *arr, const int N) {
+void bubbleSort(int arr[], const int N) {
     for (int i = 0; i < N - 1; i++) {
         for (int j = 0; j < N - i - 1; j++) {
             int swap = arr[j];
@@ -48,7 +63,7 @@ void bubbleSort(int *arr, const int N) {
     }     
 }
 
-void shakerSort(int *arr, const int N) {
+void shakerSort(int arr[], const int N) {
     for (int i = 0; i < N / 2; i++) {
         for (int j = i; j < N - i - 1; j++) {
             int swap = arr[j];
@@ -68,7 +83,7 @@ void shakerSort(int *arr, const int N) {
     } 
 }
 
-void combSort(int *arr, const int N) {
+void combSort(int arr[], const int N) {
 	float k = 1.247;
     float S = N - 1;
 	int count = 0;
@@ -90,7 +105,7 @@ void combSort(int *arr, const int N) {
     bubbleSort(arr, N);
 }
 
-void insertSort(int *arr, const int N) {
+void insertSort(int arr[], const int N) {
     int i, key, j;
     for (i = 1; i < N; i++) {
         key = arr[i];
@@ -104,7 +119,7 @@ void insertSort(int *arr, const int N) {
     }
 }
 
-void quickSort(int* arr, int start, int end)
+void quickSort(int arr[], int start, int end)
 {
 	int mid;
 	int f = start; 
@@ -128,8 +143,8 @@ void quickSort(int* arr, int start, int end)
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    const int N = 100;
-    int arr[N] = {};
+    const int N = 10;
+    int arr[N] = {1, 2, 5, 5, 5, 5, 5, 9, 9, 9};
     
     cout << "Navigation:" << "\n"
     << "1) Create an integer array of size N = 100. The elements of the array must take a random value in the range from -99 to 99" << "\n"
@@ -167,41 +182,65 @@ int main() {
             }
             case 3: {
                 auto start = chrono::steady_clock::now();
-                int mn = arr[0];
-                int mx = arr[0];
-                for (int i = 0; i < N; i++) {
-                    mn = min(mn, arr[i]);
-                    mx = max(mx, arr[i]);
-                }
+                int mn, mx;
+                findArrayMinMax(arr, N, mn, mx);
                 auto end = chrono::steady_clock::now();
                 cout << "Unsorted: Min " << mn << ", Max " << mx << "\n" 
                 << "Search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " mcs" << "\n";
-                
+
                 quickSort(arr, 0, N - 1);
-                auto startSorted = chrono::steady_clock::now();
-                cout << "Sorted: Min " << arr[0] << ", Max " << arr[N - 1] << "\n";
-                auto endSorted = chrono::steady_clock::now();
-                cout << "Search time: " << chrono::duration_cast<chrono::microseconds>(endSorted - startSorted).count() << " mcs" << "\n"; 
+                start = chrono::steady_clock::now();
+                cout << "\n" << "Sorted: Min " << arr[0] << ", Max " << arr[N - 1] << "\n";
+                end = chrono::steady_clock::now();
+                cout << "Search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " mcs" << "\n"; 
                 break; 
             } 
             case 4: {
+                int average = findArrayAverage(arr, N);
+                cout << "Unsorted average: " << average << "\n";
+
+                auto start = chrono::steady_clock::now();
+                int count = 0;
+                for (int i = 0; i < N; i++) {
+                    if (arr[i] == average) {
+                        cout << i << " ";
+                        count++;
+                    }
+                }
+                auto end = chrono::steady_clock::now();
+
+                if (count != 0) cout << "\n";
+                cout << "Search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " mcs" << "\n";
+                cout << "Count of elements: "<< count << "\n";
+
                 quickSort(arr, 0, N - 1);
                 int mn = arr[0];
                 int mx = arr[N - 1];
-                int average = (mn + mx) / 2;
-                cout << "Average: " << average << "\n";
+                int averageSorted = (mn + mx) / 2;
+                cout << "\n" << "Sorted average: " << averageSorted << "\n";
 
-                int count = 0;
+                start = chrono::steady_clock::now();
+                count= 0;
                 int index = binarySearch(arr, average, 0, N - 1);
                 for (int i = index - 1; i > -1; i--) {
-                    if (arr[i] == average) cout << i << " ";
+                    if (arr[i] == average) {
+                        cout << i << " ";
+                        count++;    
+                    }
                     else break;
                 }
                 for (int i = index; i < N; i++) {
-                    if (arr[i] == average) cout << i << " ";
+                    if (arr[i] == average) {
+                        cout << i << " ";
+                        count++;    
+                    }
                     else break;
                 }
-                cout << "\n" << "Count of elements: "<< count;
+                end = chrono::steady_clock::now();
+                if (count != 0) cout << "\n";
+                cout << "Search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " mcs" << "\n"; 
+                
+                cout << "Count of elements: "<< count;
                 break;   
             }     
             case 5: {
@@ -277,12 +316,12 @@ int main() {
                 auto end = chrono::steady_clock::now();
                 cout << ", search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " mcs" << "\n";
                 
-                auto startDefault = chrono::steady_clock::now();
+                start = chrono::steady_clock::now();
                 cout << "Default: ";
                 if (defaultSearch(arr, number, N) != -1) cout << "true";
                 else cout << "false";
-                auto endDefault = chrono::steady_clock::now();
-                cout << ", search time: " << chrono::duration_cast<chrono::microseconds>(endDefault - startDefault).count() << " mcs" << "\n";
+                end = chrono::steady_clock::now();
+                cout << ", search time: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << " mcs" << "\n";
 
                 break;
             } 
