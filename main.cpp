@@ -143,8 +143,8 @@ void quickSort(int arr[], int start, int end)
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    const int N = 10;
-    int arr[N] = {1, 2, 5, 5, 5, 5, 5, 9, 9, 9};
+    const int N = 100;
+    int arr[N] = {};
     
     cout << "Navigation:" << "\n"
     << "1) Create an integer array of size N = 100. The elements of the array must take a random value in the range from -99 to 99" << "\n"
@@ -214,10 +214,8 @@ int main() {
                 cout << "Count of elements: "<< count << "\n";
 
                 quickSort(arr, 0, N - 1);
-                int mn = arr[0];
-                int mx = arr[N - 1];
-                int averageSorted = (mn + mx) / 2;
-                cout << "\n" << "Sorted average: " << averageSorted << "\n";
+                average = (arr[0] + arr[N - 1]) / 2;
+                cout << "\n" << "Sorted average: " << average << "\n";
 
                 start = chrono::steady_clock::now();
                 count= 0;
@@ -334,7 +332,7 @@ int main() {
                     cout << "\n" << "You entered an incorrect value";
                     break;
                 }
-                if (firstIndex < 0 || secondIndex >= N) {
+                if (firstIndex < 0 || secondIndex < 0 || firstIndex >= N || secondIndex >= N) {
                     cout << "\n" << "You entered incorrect indexes";
                     break;
                 }
