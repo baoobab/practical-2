@@ -4,10 +4,14 @@
 using namespace std;
 
 
-void fillArray(int arr[], const int N, int absRange) {
+int getRandomValueFromRange(int leftLimit, int rightLimit) {
+    return leftLimit + rand() % (rightLimit - leftLimit + 1);
+}
+
+void fillArray(int arr[], const int N, int leftLimit, int rightLimit) {
     srand(time(0));
     for (int i = 0; i < N; i++) {
-        arr[i] = rand() % (absRange * 2) - absRange;
+        arr[i] = getRandomValueFromRange(-99, 99);
     }
 }
 
@@ -143,8 +147,8 @@ void quickSort(int arr[], int start, int end)
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    const int N = 100;
-    int arr[N] = {};
+    const int N = 10;
+    int arr[N] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     
     cout << "Navigation:" << "\n"
     << "1) Create an integer array of size N = 100. The elements of the array must take a random value in the range from -99 to 99" << "\n"
@@ -154,7 +158,8 @@ int main() {
     << "5) Prints the number of elements in sorted array that are less then number <a>" << "\n"
     << "6) Prints the number of elements in sorted array that are greater than the number <b>" << "\n"
     << "7) Displays information about whether the <number> in sorted array. And compare binary search with regular search alorithm (*)" << "\n"
-    << "8) Swaps array elements on <indexes>" << "\n";
+    << "8) Swaps array elements on <indexes>" << "\n"
+    << "9) IDZ ¹5" << "\n";
 
     while(true) {
         cin.clear(); // Clearing the input stream from possible errors
@@ -165,9 +170,9 @@ int main() {
         cin >> workPoint;
 
         switch (workPoint)
-        {
+        {   
             case 1: {
-                fillArray(arr, N, 100);
+                fillArray(arr, N, -99, 99);
                 for (int i = 0; i < N; i++) {
                     cout << arr[i] << " ";
                 }
@@ -341,6 +346,44 @@ int main() {
 
                 break;
             } 
+            case 9: {
+                int number;
+                cout << "\n" << "Enter an integer: ";
+                cin >> number;
+                if (!cin.good()) {
+                    cout << "\n" << "You entered an incorrect value";
+                    break;
+                }
+                int count = 0;
+                int randomValue = getRandomValueFromRange(1, 9);
+
+                cout << "Calculated random value: " << randomValue << "\n";
+                cout << "Number of even elements with even values: ";
+                for (int i = 0; i < N; i += 2) {
+                    arr[i] -= number;
+                    arr[i] *= randomValue;
+                    if (arr[i] % 2 == 0) count++;
+                }
+                cout << count << "\n";
+
+                count = 0;
+                cout << "Number of odd elements with odd values: ";
+                for (int i = 1; i < N; i += 2) {
+                    if (arr[i] % 2 != 0) count++;
+                }
+                cout << count << "\n";
+
+                for (int i = 1; i < 10; i++) {
+                    count = 0;
+                    for (int j = 0; j < N; j++) {
+                        if (arr[j] % i == 0) {
+                            count++;
+                        }
+                    }
+                    cout << "Number of elements divisible by " << i << ": " << count << "\n";
+                }
+                break;
+            }
             default: {
                 cout << "\n" << "You did not enter a number in the range from 1 to 8";
                 break;
