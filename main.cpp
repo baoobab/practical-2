@@ -18,7 +18,7 @@ void fillArray(int arr[], const int N, int leftLimit, int rightLimit) {
 void findArrayMinMax(int arr[], const int N, int &mn, int &mx) {
     mn = arr[0];
     mx = arr[0];
-    for (int i = 0; i < N; i++) {
+    for (int i = 1; i < N; i++) {
         mn = min(mn, arr[i]);
         mx = max(mx, arr[i]);
     }   
@@ -132,7 +132,7 @@ void quickSort(int arr[], int start, int end)
 	while (f < l)
 	{
 		while (arr[f] < mid) f++;
-		while (arr[l]> mid) l--;
+		while (arr[l] > mid) l--;
 		if (f <= l)
 		{
 			swap(arr[f], arr[l]);
